@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 	const api = "../api/"; // Default: "../api/"
 	const updateInterval = 30000; // Default: 30000
-	
+
 	const Notify = new XNotify("BottomRight");
 
 	let updateDashboardListInterval = setInterval(listDashboard, updateInterval);
@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	};
 
 	let globalData = {};
-	
+
 	let body = document.body;
 
 	let spanGlobalMarketCap = document.getElementById("global-market-cap");
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 	let spanPopupTitle = divPopupWrapper.getElementsByClassName("title")[0];
 
 	let buttonPopupClose = divPopupWrapper.getElementsByClassName("close-button")[0];
-	
+
 	let divPageDashboard = document.getElementById("page-dashboard");
 	let divPageMarket = document.getElementById("page-market");
 	let divPageHoldings = document.getElementById("page-holdings");
@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						description:response.error
 					});
 				}
-				
+
 				listHoldings();
 			}).catch(e => {
 				Notify.error({
@@ -398,7 +398,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						description:response.error
 					});
 				}
-				
+
 				listHoldings();
 			}).catch(e => {
 				Notify.error({
@@ -523,10 +523,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 						clearInterval(update);
 					}
 				}
-				
+
 				getCoinHistoricalMarketData(ids, settings.currency, previousYear(new Date()), new Date()).then(data => {
 					hideLoading();
-					
+
 					showLoading(1400, "Generating chart...");
 
 					let keys = Object.keys(data);
@@ -725,7 +725,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 				data.push(fee);
 				data.push(notes);
 				data.push(type);
-									
+
 				if(type.toLowerCase() === "transfer") {
 					let from = events[i].getAttribute("data-from").toLowerCase().trim();
 					let to = events[i].getAttribute("data-to").toLowerCase().trim();
@@ -875,7 +875,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 				inputCurrentPassword.value = "";
 				inputNewPassword.value = "";
 				inputRepeatPassword.value = "";
-				
+
 				changePassword(currentPassword, newPassword).then((response) => {
 					if("error" in response) {
 						Notify.error({
@@ -1034,7 +1034,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		inputSharingURL.setSelectionRange(0, 99999);
 
 		document.execCommand("copy");
-		
+
 		if(window.getSelection) {
 			window.getSelection().removeAllRanges();
 		} else if(document.selection) {
@@ -1071,7 +1071,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						let split = string.split("");
 						split.splice(position, 0, ".");
 						let join = split.join("");
-						
+
 						let id = info.coingecko;
 						let amount = parseFloat(parseFloat(join).toFixed(2));
 
@@ -1243,7 +1243,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 									setTimeout(() => {
 										let html = '<span class="message">Please scan the QR code with the Cryptofolio mobile app from the login screen.</span><div class="popup-canvas-wrapper"></div><button class="reject" id="popup-dismiss">Dismiss</button>';
-				
+
 										popup("QR Login Code", html, "400px", "540px");
 
 										let qrStyle = JSON.parse(qrCodeStyle);
@@ -1301,10 +1301,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 		};
 
 		let html = '<span class="message">Donate ' + symbol + '</span><div class="popup-canvas-wrapper donation"></div><span class="message break">' + addresses[symbol] + '</span><button class="reject" id="popup-dismiss">Dismiss</button>';
-				
+
 		popup("Donation Address", html, "400px", "520px");
 
-		let style = { 
+		let style = {
 			width:310,
 			height:310,
 			data:addresses[symbol],
@@ -1415,7 +1415,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		function addWatchlist(id, symbol) {
 			createWatchlist(id, symbol).then(response => {
 				hidePopup();
-				
+
 				if("error" in response) {
 					Notify.error({
 						title:"Error",
@@ -1555,7 +1555,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 				let holdings = JSON.parse(holdingsData);
 				let keys = Object.keys(holdings);
-							
+
 				keys.map(id => {
 					chartData[today][id] = parseFloat(holdings[id].amount);
 					chartData[today].holdingsValue += parseFloat(holdings[id].value);
@@ -1568,20 +1568,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 		let values = [];
 
 		let dates = Object.keys(chartData);
-		
+
 		for(let i = startDate; i < dates.length; i++) {
 			let date = dates[i];
 
 			labels.push(new Date(Date.parse(date)));
 			tooltips.push(formatDateHuman(new Date(Date.parse(date))));
-			
+
 			if(chartData[date].holdingsValue < 0) {
 				values.push(0);
 			} else {
 				values.push(chartData[date].holdingsValue);
 			}
 		}
-		
+
 		let currentValue = chartData[today].holdingsValue;
 
 		let value0d = values.length >= 1 ? values[values.length - 1] : "-";
@@ -1677,20 +1677,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 		let values = [initialValue];
 
 		let dates = Object.keys(chartData);
-		
+
 		for(let i = startDate; i < dates.length; i++) {
 			let date = dates[i];
 
 			labels.push(new Date(Date.parse(date)));
 			tooltips.push(formatDateHuman(new Date(Date.parse(date))));
-			
+
 			if(chartData[date].holdingsValue < 0) {
 				values.push(0);
 			} else {
 				values.push(chartData[date].holdingsValue);
 			}
 		}
-		
+
 		let currentValue = chartData[today].holdingsValue;
 
 		let value0d = values.length >= 1 ? values[values.length - 1] : "-";
@@ -1803,7 +1803,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 										}).catch(e => {
 											console.log(e);
 										});
-										
+
 										divLoginWrapper.classList.remove("active");
 									}, 250);
 
@@ -1946,7 +1946,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 		localStorage.removeItem("token");
 		localStorage.removeItem("username");
-		
+
 		if(!divLoginWrapper.classList.contains("active")) {
 			divLoginWrapper.classList.add("active");
 			inputLoginUsername.focus();
@@ -2281,7 +2281,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 					if(settings.dashboardWatchlist === "enabled") {
 						div.classList.add("watchlist-row");
-						
+
 						let buttonWatchlist = document.createElement("button");
 						buttonWatchlist.classList.add("watchlist-button");
 						buttonWatchlist.innerHTML += '<svg width="1792" height="1792" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1728 647q0 22-26 48l-363 354 86 500q1 7 1 20 0 21-10.5 35.5t-30.5 14.5q-19 0-40-12l-449-236-449 236q-22 12-40 12-21 0-31.5-14.5t-10.5-35.5q0-6 2-20l86-500-364-354q-25-27-25-48 0-37 56-46l502-73 225-455q19-41 49-41t49 41l225 455 502 73q56 9 56 46z"/></svg>';
@@ -2537,7 +2537,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 								keys.map(holding => {
 									let coin = holdings[holding];
-					
+
 									let id = "dashboard-holdings-coin-" + holding;
 									let icon = coin.image;
 									let amount = coin.amount;
@@ -2829,7 +2829,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						}
 
 						let mixedValue = 0;
-						
+
 						if(!empty(coins)) {
 							let data = [];
 							parseHoldings(coins).then(holdings => {
@@ -2839,10 +2839,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 								}
 
 								let holdingsObject = {};
-
+								divHoldingsList.innerHTML = ''
 								Object.keys(holdings).map(holding => {
 									let coin = holdings[holding];
-					
+
 									let id = "holdings-coin-" + holding;
 									let icon = coin.image;
 									let amount = coin.amount;
@@ -2943,7 +2943,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 															divHoldingsMoreMenu.style.left = e.clientX - 2 - divHoldingsMoreMenu.clientWidth + "px";
 														}
 													});
-													
+
 													div.appendChild(more);
 												}
 
@@ -2965,7 +2965,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 								if(mixedValue > 0) {
 									globalData.totalValue = mixedValue;
 								}
-								
+
 								if(window.innerWidth > 480) {
 									spanHoldingsTotalValue.textContent = currencies[settings.currency] + separateThousands(globalData.totalValue.toFixed(2));
 								} else {
@@ -3003,13 +3003,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 			updateHoldingsListInterval = setInterval(listHoldings, updateInterval);
 		}
 	}
-	
+
 	function listActivity() {
 		if(!divLoginWrapper.classList.contains("active") && divNavbarActivity.classList.contains("active")) {
 			clearInterval(updateActivityListInterval);
-	
+
 			divPageNavigation.classList.remove("active");
-	
+
 			setTimeout(() => {
 				if(divActivityList.classList.contains("loading")) {
 					listActivity();
@@ -3032,7 +3032,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 						events = sortActivityReverse(events);
 						Object.keys(events).map(txID => {
 							let activity = events[txID];
-			
+
 							let id = "activity-event-" + txID;
 							let symbol = activity.symbol.toUpperCase();
 							let date = activity.date;
@@ -3087,7 +3087,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 									div.setAttribute("data-fee", fee);
 									div.setAttribute("data-notes", notes);
 									div.setAttribute("data-type", type);
-									
+
 									if(type.toLowerCase() === "transfer") {
 										div.setAttribute("data-from", from);
 										div.setAttribute("data-to", to);
@@ -3169,10 +3169,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 				});
 
 				showLoading(8000, "This might take a while... Don't touch anything.");
-				
+
 				getCoinHistoricalMarketData(coinID, settings.currency, previousYear(new Date()), new Date()).then(data => {
 					hideLoading();
-					
+
 					showLoading(1400, "Generating chart...");
 
 					let keys = Object.keys(data);
@@ -3398,7 +3398,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 		element.innerHTML = "";
 		element.appendChild(canvas);
 	}
-	
+
 	async function generateHoldingsChart(element, title, labels, tooltips, data) {
 		let canvas = document.createElement("canvas");
 		canvas.id = "chart-canvas";
@@ -3792,7 +3792,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 							description:response.error
 						});
 					}
-				
+
 					listHoldings();
 				}).catch(e => {
 					Notify.error({
@@ -3956,11 +3956,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 			html += '<input id="popup-id" class="hidden" placeholder="ID... (e.g. Bitcoin)">';
 			html += '<button class="delete" id="popup-delete">Delete Event</button>';
 		}
-		
+
 		html += '<button class="reject" id="popup-cancel">Cancel</button><button class="resolve" id="popup-confirm">Confirm</button>';
 
 		let popupHeight = 360;
-	
+
 		popup((action === "create") ? "Recording Event" : "Editing Event", html, "300px", popupHeight + "px");
 
 		let popupID;
@@ -4060,11 +4060,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 				});
 			});
 		}
-	
+
 		document.getElementById("popup-cancel").addEventListener("click", () => {
 			hidePopup();
 		});
-	
+
 		document.getElementById("popup-confirm").addEventListener("click", () => {
 			let symbol = popupSymbol.value;
 			let date = popupDate.value;
@@ -4077,7 +4077,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			let price = popupPrice.value;
 			let from = popupFrom.value;
 			let to = popupTo.value;
-			
+
 			if(isNaN(amount) || isNaN(fee) || (isNaN(price) && !empty(price))) {
 				Notify.error({
 					title:"Error",
@@ -4394,7 +4394,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 								description:response.error
 							});
 						}
-					
+
 						listActivity();
 
 						if(settings.transactionsAffectHoldings !== "disabled") {
@@ -4965,7 +4965,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 			if(!(id in sorted)) {
 				sorted[id] = { amount:0, symbol:symbol };
 			}
-			
+
 			if(type === "sell") {
 				let subtracted = parseFloat(sorted[id].amount) - amount;
 				if(subtracted < 0) {
